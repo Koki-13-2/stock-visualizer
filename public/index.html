@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📈 株価・業績ビジュアライザー</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>📈 株価・業績ビジュアライザー</h1>
+    <p>Yahoo Finance データで株価推移・業績を可視化</p>
+  </header>
+
+  <main>
+    <!-- 検索エリア -->
+    <section class="search-box">
+      <input type="text" id="symbolInput" placeholder="銘柄コード (例: AAPL, 7203.T, TSLA)" />
+      <select id="rangeSelect">
+        <option value="1mo">1ヶ月</option>
+        <option value="3mo">3ヶ月</option>
+        <option value="6mo" selected>6ヶ月</option>
+        <option value="1y">1年</option>
+        <option value="2y">2年</option>
+        <option value="5y">5年</option>
+      </select>
+      <button id="searchBtn" onclick="fetchAll()">🔍 検索</button>
+    </section>
+
+    <!-- クイックボタン -->
+    <section class="quick-buttons">
+      <span>クイック選択：</span>
+      <button onclick="quickSearch('AAPL')">Apple</button>
+      <button onclick="quickSearch('TSLA')">Tesla</button>
+      <button onclick="quickSearch('NVDA')">NVIDIA</button>
+      <button onclick="quickSearch('7203.T')">トヨタ</button>
+      <button onclick="quickSearch('9984.T')">ソフトバンクG</button>
+      <button onclick="quickSearch('6758.T')">ソニー</button>
+      <button onclick="quickSearch('MSFT')">Microsoft</button>
+      <button onclick="quickSearch('GOOGL')">Google</button>
+    </section>
+
+    <!-- エラー表示 -->
+    <div id="errorMsg" class="error hidden"></div>
+
+    <!-- ローディング -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div><span>データ取得中...</span>
+    </div>
+
+    <!-- 結果エリア -->
+    <div id="results" class="hidden">
+
+      <!-- 銘柄ヘッダー -->
+      <section class="stock-header">
+        <h2 id="stockName"></h2>
+        <div class="kpi-grid" id="kpiGrid"></div>
+      </section>
+
+      <!-- 株価チャート -->
+      <section class="chart-section">
+        <h3>📊 株価推移</h3>
+        <div class="chart-wrap">
+          <canvas id="priceChart"></canvas>
+        </div>
+      </section>
+
+      <!-- 出来高チャート -->
+      <section class="chart-section">
+        <h3>📦 出来高</h3>
+        <div class="chart-wrap small">
+          <canvas id="volumeChart"></canvas>
+        </div>
+      </section>
+
+      <!-- 業績チャート -->
+      <section class="chart-section">
+        <h3>💹 業績推移（売上・純利益・粗利益）</h3>
+        <div class="chart-wrap">
+          <canvas id="financialChart"></canvas>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>データ提供: Yahoo Finance | 投資判断は自己責任でお願いします</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
